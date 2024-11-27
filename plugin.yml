@@ -1,0 +1,7 @@
+name: EasterEggs
+main: fernanACM\EasterEggs\EasterEggs
+version: 1.0.0
+api: 5.3.0
+author: fernanACM
+website: https://github.com/fernanACM
+description: "Easter eggs for PocketMine-MP 5.0 servers"
