@@ -17,10 +17,30 @@ use pocketmine\player\Player;
 abstract class Provider{
 
     /**
-     * @param string $userName
+     * @param Player $player
+     * @return array
+     */
+    abstract protected function getEgg(Player $player): array;
+
+    /**
+     * @param Player $player
      * @return integer
      */
-    abstract public function getEggsByUserName(string $userName): int;
+    abstract public function getEggs(Player $player): int;
+
+    /**
+     * @param Player $player
+     * @param string $eggId
+     * @return void
+     */
+    abstract public function addEgg(Player $player, string $eggId): void;
+
+    /**
+     * @param Player $player
+     * @param string $eggId
+     * @return void
+     */
+    abstract public function removeEgg(Player $player, string $eggId): void;
 
     /**
      * @param Player $player
@@ -35,6 +55,32 @@ abstract class Provider{
     abstract public function createAccount(Player $player): void;
 
     /**
+     * @param Player $player
+     * @return boolean
+     */
+    abstract public function isCompleted(Player $player): bool;
+
+    /**
+     * @param Player $player
+     * @param boolean $result
+     * @return boolean
+     */
+    abstract public function setCompleted(Player $player, bool $result): bool;
+
+    /**
+     * @param Player $player
+     * @return string
+     */
+    abstract public function getEventName(Player $player): string;
+
+    /**
+     * @param Player $player
+     * @param string $eventId
+     * @return void
+     */
+    abstract public function applyEventById(Player $player, string $eventId): void;
+
+    /**
      * @return void
      */
     abstract public function load(): void;
@@ -43,4 +89,9 @@ abstract class Provider{
      * @return void
      */
     abstract public function unload(): void;
+
+    /**
+     * @return void
+     */
+    abstract public function reset(): void;
 }

@@ -72,6 +72,89 @@ final class ProviderManager{
     }
 
     /**
+     * @return void
+     */
+    public function reset(): void{
+        $this->provider->reset();
+    }
+
+    /**
+     * @param Player $player
+     * @return boolean
+     */
+    public function exists(Player $player): bool{
+        return $this->provider->exists($player);
+    }
+
+    /**
+     * @param Player $player
+     * @return void
+     */
+    public function create(Player $player): void{
+        $this->provider->createAccount($player);
+    }
+
+    /**
+     * @param Player $player
+     * @param string $eventId
+     * @return void
+     */
+    public function applyEventById(Player $player, string $eventId): void{
+        $this->provider->applyEventById($player, $eventId);
+    }
+
+    /**
+     * @param Player $player
+     * @return string
+     */
+    public function getEventName(Player $player): string{
+        return $this->provider->getEventName($player);
+    }
+
+    /**
+     * @param Player $player
+     * @param boolean $result
+     * @return void
+     */
+    public function setCompleted(Player $player, bool $result): void{
+        $this->provider->setCompleted($player, $result);
+    }
+
+    /**
+     * @param Player $player
+     * @return boolean
+     */
+    public function isCompleted(Player $player): bool{
+        return $this->provider->isCompleted($player);
+    }
+
+    /**
+     * @param Player $player
+     * @return integer
+     */
+    public function getEggs(Player $player): int{
+        return $this->provider->getEggs($player);
+    }
+
+    /**
+     * @param Player $player
+     * @param string $eggId
+     * @return void
+     */
+    public function addEgg(Player $player, string $eggId): void{
+        $this->provider->addEgg($player, $eggId);
+    }
+
+    /**
+     * @param Player $player
+     * @param string $eggId
+     * @return void
+     */
+    public function removeEgg(Player $player, string $eggId): void{
+        $this->provider->removeEgg($player, $eggId);
+    }
+
+    /**
      * @return Provider
      */
     public function getProvider(): Provider{
