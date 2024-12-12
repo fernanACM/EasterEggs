@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+namespace fernanACM\EasterEggs\helper;
+
 use pocketmine\utils\Config;
 
 use fernanACM\EasterEggs\EasterEggs as EE;
