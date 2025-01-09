@@ -14,10 +14,10 @@ namespace fernanACM\EasterEggs\forms\type;
 
 use pocketmine\player\Player;
 
+use pocketmine\utils\TextFormat as TF;
 use pocketmine\utils\SingletonTrait;
 
 use Vecnavium\FormsUI\SimpleForm;
-use Vecnavium\FormsUI\CustomForm;
 
 use fernanACM\EasterEggs\language\LangKey;
 use fernanACM\EasterEggs\language\Language;
@@ -59,12 +59,14 @@ final class SetupForm{
                 break;
 
                 case 2: // LOCATIONS
+                    $this->locations($player);
                 break;
 
                 case 4:
                 break;
             }
         });
+        $form->setTitle(TF::colorize("&l&9EASTEREGGS"));
     }
 
     /**
@@ -72,6 +74,27 @@ final class SetupForm{
      * @return void
      */
     protected function locations(Player $player): void{
-
+        $locations = SetupHelper::getEggs();
+        $form = new SimpleForm(function(Player $player, $data): void{
+            if(is_null($data)){
+                $this->open($player);
+                return;
+            }
+            $this->open($player);
+        });
+        $form->setTitle(TF::colorize("&l&9EASTEREGGS"));
+        $content = "";
+        foreach($locations as $location){
+            [$x, $y, $z, $world] = explode(":", $location);
+            $content .= Language::getMessage(LangKey::SETUP_FORM_CONTENT_LOCATIONS, [
+                "{X}" => $x,
+                "{Y}" => $y,
+                "{Z}" => $z,
+                "{WORLD}" => $world
+            ]) . "\n";
+        }
+        $form->setContent($content);
+        $form->addButton(Language::getMessage(LangKey::SETUP_FORM_BUTTON_LOCATIONS));
+        $player->sendForm($form);
     } 
 }

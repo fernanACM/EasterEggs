@@ -61,21 +61,23 @@ final class Language{
      * @param Player $player
      * @param string $key
      * @param array $replaces
+     * @param boolean $sound
      * @return void
      */
-    public static function isError(Player $player, string $key, array $replaces = []): void{
+    public static function isError(Player $player, string $key, array $replaces = [], bool $sound = true): void{
         $player->sendMessage(EE::getPrefix().self::getPlayerMessage($player, $key, $replaces));
-        PluginUtils::PlaySound($player, "mob.villager.no");
+        if($sound) PluginUtils::PlaySound($player, "mob.villager.no");
     }
 
     /**
      * @param Player $player
      * @param string $key
      * @param array $replaces
+     * @param boolean $sound
      * @return void
      */
-    public static function isSuccess(Player $player, string $key, array $replaces = []): void{
+    public static function isSuccess(Player $player, string $key, array $replaces = [], bool $sound = true): void{
         $player->sendMessage(EE::getPrefix().self::getPlayerMessage($player, $key, $replaces));
-        PluginUtils::PlaySound($player, "mob.villager.yes");
+        if($sound) PluginUtils::PlaySound($player, "mob.villager.yes");
     }
 }

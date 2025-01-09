@@ -30,6 +30,12 @@ abstract class Provider{
 
     /**
      * @param Player $player
+     * @return integer
+     */
+    abstract public function getLastEggId(Player $player): int;
+
+    /**
+     * @param Player $player
      * @param string $eggId
      * @return void
      */
@@ -41,6 +47,13 @@ abstract class Provider{
      * @return void
      */
     abstract public function removeEgg(Player $player, string $eggId): void;
+
+    /**
+     * @param Player $player
+     * @param string $eggId
+     * @return boolean
+     */
+    abstract public function claimedEgg(Player $player, string $eggId): bool;
 
     /**
      * @param Player $player

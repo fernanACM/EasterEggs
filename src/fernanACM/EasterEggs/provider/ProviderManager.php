@@ -138,6 +138,14 @@ final class ProviderManager{
 
     /**
      * @param Player $player
+     * @return integer
+     */
+    public function getLastEggId(Player $player): int{
+        return $this->provider->getLastEggId($player);
+    }
+
+    /**
+     * @param Player $player
      * @param string $eggId
      * @return void
      */
@@ -152,6 +160,15 @@ final class ProviderManager{
      */
     public function removeEgg(Player $player, string $eggId): void{
         $this->provider->removeEgg($player, $eggId);
+    }
+
+    /**
+     * @param Player $player
+     * @param string $eggId
+     * @return boolean
+     */
+    public function claimedEgg(Player $player, string $eggId): bool{
+        return $this->provider->claimedEgg($player, $eggId);
     }
 
     /**

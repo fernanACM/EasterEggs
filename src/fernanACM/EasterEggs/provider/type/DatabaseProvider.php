@@ -72,7 +72,7 @@ class DatabaseProvider extends Provider{
         $this->database->executeSelect(
             DatabaseConst::GET_PLAYER_DATA,
             [DataConst::PLAYER => $player->getName()],
-            function(array $rows) use (&$playerData){
+            function(array $rows) use(&$playerData){
                 if(!empty($rows)){
                     $playerData = $rows[0];
                 }
@@ -90,7 +90,7 @@ class DatabaseProvider extends Provider{
         $this->database->executeSelect(
             DatabaseConst::PLAYER_EXISTS,
             [DataConst::PLAYER => $player->getName()],
-            function(array $rows) use (&$exists){
+            function(array $rows) use(&$exists){
                 $exists = !empty($rows);
             }
         );
@@ -178,6 +178,20 @@ class DatabaseProvider extends Provider{
 
     /**
      * @param Player $player
+     * @return integer
+     */
+    public function getLastEggId(Player $player): int{
+        $playerData = $this->getPlayerData($player);
+        $claimedEggs = json_decode($playerData[DataConst::EGGS] ?? "[]", true);
+        $ids = array_map(function(string $eggId): int{
+            preg_match('/\d+/', $eggId, $matches); // SEARCH NUMBERS IN THE FORMAT "egg(n)"
+            return isset($matches[0]) ? (int)$matches[0] : 0;
+        }, $claimedEggs);
+        return empty($ids) ? 0 : max($ids);
+    }
+
+    /**
+     * @param Player $player
      * @return array
      */
     protected function getEgg(Player $player): array{
@@ -221,6 +235,18 @@ class DatabaseProvider extends Provider{
                 DataConst::EGGS => json_encode($eggs)
             ]
         );
+    }
+
+    /**
+     * @param Player $player
+     * @param string $eggId
+     * @return boolean
+     */
+    public function claimedEgg(Player $player, string $eggId): bool{
+        if(!$this->exists($player)) return false;
+
+        $eggs = $this->getEgg($player);
+        return in_array($eggId, $eggs, true);
     }
 
     /**

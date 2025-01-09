@@ -161,6 +161,20 @@ class YamlProvider extends Provider{
 
     /**
      * @param Player $player
+     * @return integer
+     */
+    public function getLastEggId(Player $player): int{
+        $playerData = $this->getPlayerData($player);
+        $claimedEggs = $playerData[DataConst::EGGS] ?? [];
+        $ids = array_map(function(string $eggId): int{
+            preg_match('/\d+/', $eggId, $matches); // SEARCH NUMBERS IN THE FORMAT "egg(n)"
+            return isset($matches[0]) ? (int)$matches[0] : 0;
+        }, $claimedEggs);
+        return empty($ids) ? 0 : max($ids);
+    }
+
+    /**
+     * @param Player $player
      * @return array
      */
     protected function getEgg(Player $player): array{
@@ -201,6 +215,20 @@ class YamlProvider extends Provider{
 
         $this->data->set($player->getDisplayName(), $playerData);
         $this->data->save();
+    }
+
+    /**
+     * @param Player $player
+     * @param string $eggId
+     * @return boolean
+     */
+    public function claimedEgg(Player $player, string $eggId): bool{
+        if(!$this->exists($player)) return false;
+        if(isset($this->getEgg($player)[$eggId])) return false;
+
+        $playerData = $this->getPlayerData($player);
+        $eggs = $playerData[DataConst::EGGS] ?? [];
+        return in_array($eggId, $eggs, true);
     }
 
     /**

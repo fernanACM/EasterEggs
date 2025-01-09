@@ -119,7 +119,7 @@ final class SetupHelper{
         $item = VanillaItems::BLAZE_ROD();
         $item->setNamedTag(CompoundTag::create()->setString(NBTConst::EASTER_EGGS, NBTConst::REMOVE));
         $item->addEnchantment(new EI(VE::UNBREAKING()));
-        $item->setCustomName("  ");
+        $item->setCustomName(Language::getMessage(LangKey::ITEM_NAME));
         return $item;
     }
 
