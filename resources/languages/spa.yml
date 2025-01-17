@@ -1,0 +1,109 @@
+#  _____                 _                   _____                       
+# | ____|   __ _   ___  | |_    ___   _ __  | ____|   __ _    __ _   ___ 
+# |  _|    / _` | / __| | __|  / _ \ | '__| |  _|    / _` |  / _` | / __|
+# | |___  | (_| | \__ \ | |_  |  __/ | |    | |___  | (_| | | (_| | \__ \
+# |_____|  \__,_| |___/  \__|  \___| |_|    |_____|  \__, |  \__, | |___/
+#                                                    |___/   |___/
+#               by fernanACM
+
+# EasterEggs para servidores PocketMine-MP 5.0. Encuentra los huevos y obtén recompensas. 
+# completando el objetivo de Huevos.
+
+# ¡¡NO TOCAR!!
+language-version: "1.0.0"
+
+Messages:
+  error:
+    no-permission: "&c¡No tienes permisos para esto!"
+    full-inventory: "&c¡Tu inventario está lleno!"
+    lack-of-data: "&cFaltan datos para completar la acción..."
+    characteres-limit: "&c¡Has superado el límite de caracteres permitidos!"
+    no-existing-events: "&c¡No hay eventos existentes!"
+    existing-event: "&cEl evento ya existe..."
+    event-not-found: "&cEl evento especificado no se encontró."
+    eggs-are-missing: "&c¡La configuración no ha sido completada! Falta huevos por establecer."
+    it-is-completed: "&c¡Ya has completado este objetivo!"
+    it-is-claimed: "&c¡Ya has reclamado este huevo!"
+    reached-the-limit: "&c¡Has alcanzado el límite permitido!"
+    unclaimed-egg: "&cEste huevo no ha sido reclamado..."
+    existing-egg: "&c¡El huevo ya existe!"
+    no-existing-eggs: "&cNo hay huevos existentes..."
+  success:
+    # Usa las siguientes keys para saber las coordenadas y el nombre del mundo
+    # dónde han sido establecidas las locaciones: ["{X}", "{Y}", "{Z}", "{WORLD}"]
+    saved-position: "&aLa posición se ha guardado exitosamente en: &7{X}, {Y}, {Z} - {WORLD}&a."
+    removed-position: "&6La posición se ha eliminado exitosamente en: &7{X}, {Y}, {Z} - {WORLD}&6."
+
+    # Usa '{EGG_LIMIT}' para saber el limite de huevos.
+    enter-setup-mode: "&aHas entrado en modo de configuración. Rompe &l&7{EGG_LIMIT}&r&a bloque(s) para establecer las locaciones."
+    exit-setup-mode: "&cHas salido del modo de configuración."
+
+    # Usa '{EVENT_NAME}' para saber el nombre del evento.
+    event-created: "&aEl evento &b'{EVENT_NAME}'&r&a se ha creado exitosamente."
+    event-removed: "&6El evento &b'{EVENT_NAME}'&r&6 se ha eliminado exitosamente."
+    event-established: "&aEl evento &b'{EVENT_NAME}'&r&a se ha establecido correctamente."
+    setup-completed: "&e¡La configuración se ha completado!"
+    
+    # Usa las siguientes keys para saber el progreso: ['{EGGS}' => Huevos,
+    # '{LIMIT}' => Limite de huevos]
+    setup-progress: "&aHas añadido una nueva locación de &7({EGGS}/{LIMIT})&a."
+
+    setup-spawn-entity: "&aLa entidad se ha generado correctamente."
+    setup-despawn-entity: "&6La entidad se ha eliminado correctamente."
+    setup-reset-data: "&a¡Ha data de los jugadores ha sido reiniciada exitosamente!"
+    added-point: "&aSe ha agregado un punto exitosamente."
+    point-removed: "&aSe ha eliminado un punto exitosamente."
+    reward-received: "&a¡Has recibido tu recompensa!"
+Form:
+  setup:
+    content: "&eSelecciona una opción:"
+    toggle1-button: "&l&9MODO CONFIGURACIÓN{LINE}&r&2(ACTIVADO)"
+    toggle2-button: "&l&9MODO CONFIGURACIÓN{LINE}&r&c(DESACTIVADO)"
+    remove-button: "&l&9BASTÓN REMOVEDOR{LINE}&r&0Haga clic"
+    locations-button: "&l&9VER LOCACIONES{LINE}&r&0Haga clic"
+    entity-button: "&l&9SISTEMA DE HUEVOS{LINE}&r&0Haga clic"
+    reset-data-button: "&l&9REINICIAR DATOS{LINE}&r&0Haga clic"
+    close-button: "&l&4CERRAR MENÚ{LINE}&r&0Haga clic"
+    locations:
+      content: "&r&c- &7{X} - {Y} - {Z}: {WORLD}"
+    entities:
+      content: "&eSelecciona una opción:"
+      button1: "&l&6GENERAR HUEVOS{LINE}&r&0Haga clic"
+      button2: "&l&6QUITAR HUEVOS{LINE}&r&0Haga clic"
+    data:
+      confirm-content: "&b¿Estás seguro de que quieres reiniciar la &l&cDATA&r&b de los jugadores?"
+      button1: "&l&2Sí"
+      button2: "&l&4No"
+  event:
+    content: "&eSelecciona una opción:"
+    creator-button: "&l&sCREAR UN EVENTO{LINE}&r&0Haga clic"
+    remover-button: "&l&sBORRAR UN EVENTO{LINE}&r&0Haga clic"
+    apply-button: "&l&sESTABLECER UN EVENTO{LINE}&r&0Haga clic"
+    list-button: "&l&sLISTADO DE EVENTOS{LINE}&r&0Haga clic"
+    close-button: "&l&4CERRAR MENÚ{LINE}&r&0Haga clic"
+    creator:
+      content: "&eCrea un nombre para tu evento:"
+      input: "Introduce el nombre del evento"
+    remover-content: "&eEventos disponibles:"
+    apply:
+      content: "&eEsteblecer un evento:"
+      confirm-content: "&b¿Estás seguro de que quieres establecer este evento cómo predeterminado?"
+      button1: "&l&2Sí"
+      button2: "&l&4No"
+Item:
+  name: 
+    - "&r&l&dBASTÓN REMOVEDOR"
+    - "&r&7Haga clic derecho"
+    - "&r&7en una locación"
+  # Usa '{ITEM_COUNT}' para saber la cantidad de items que se han guardado.
+  saved-inventory: "&a¡Ha {ITEM_COUNT} item(s) guardado con éxito el inventario de recompensas!"
+Reward:
+  player-title: "&l&3COMPLETADO"
+  player-subtitle: 
+    - "&e¡Has recolectado todos los"
+    - "&eEasterEggs!"
+  # Usa estas'keys' para recibir la siguiente información:
+  # "{PLAYER}" => nombre del jugador
+  # "{EGGS}" => Meta de huevos
+  # "&" => "§" (Color)
+  broadcast-message: "&7¡El jugador &b{PLAYER}&r&7 ha conseguido completar los {EGGS} &l&dEasterEggs&r&7!"

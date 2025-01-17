@@ -14,6 +14,8 @@ namespace fernanACM\EasterEggs\const;
 
 final class NBTConst{
 
-    public const EASTER_EGGS = "EasterEgg";
+    public const EASTER_EGGS = "EasterEggs";
     public const REMOVE = "remove";
+
+    public const EGG_ID = "eggId";
 }

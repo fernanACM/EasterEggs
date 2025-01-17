@@ -1,0 +1,109 @@
+#  _____                 _                   _____                       
+# | ____|   __ _   ___  | |_    ___   _ __  | ____|   __ _    __ _   ___ 
+# |  _|    / _` | / __| | __|  / _ \ | '__| |  _|    / _` |  / _` | / __|
+# | |___  | (_| | \__ \ | |_  |  __/ | |    | |___  | (_| | | (_| | \__ \
+# |_____|  \__,_| |___/  \__|  \___| |_|    |_____|  \__, |  \__, | |___/
+#                                                    |___/   |___/
+#               by fernanACM
+
+# EasterEggs dành cho các máy chủ PocketMine-MP 5.0. Tìm các quả trứng và nhận phần thưởng 
+# bằng cách hoàn thành mục tiêu Egg.
+
+# KHÔNG CHỈNH SỬA!!
+language-version: "1.0.0"
+
+Messages:
+  error:
+    no-permission: "&cBạn không có quyền để làm điều này!"
+    full-inventory: "&cHành trang của bạn đã đầy!"
+    lack-of-data: "&cThiếu dữ liệu để hoàn thành hành động..."
+    characteres-limit: "&cBạn đã vượt quá giới hạn ký tự!"
+    no-existing-events: "&cKhông có sự kiện nào tồn tại!"
+    existing-event: "&cSự kiện này đã tồn tại..."
+    event-not-found: "&cKhông tìm thấy sự kiện được chỉ định."
+    eggs-are-missing: "&cCấu hình không đầy đủ! Một số quả trứng bị thiếu."
+    it-is-completed: "&cBạn đã hoàn thành mục tiêu này!"
+    it-is-claimed: "&cBạn đã nhận quả trứng này!"
+    reached-the-limit: "&cBạn đã đạt giới hạn cho phép!"
+    unclaimed-egg: "&cQuả trứng này chưa được nhận..."
+    existing-egg: "&cQuả trứng này đã tồn tại!"
+    no-existing-eggs: "&cKhông có quả trứng nào tồn tại..."
+  success:
+    # Sử dụng các khóa sau để biết tọa độ và tên thế giới
+    # nơi các vị trí đã được đặt: ["{X}", "{Y}", "{Z}", "{WORLD}"]
+    saved-position: "&aVị trí đã được lưu thành công tại: &7{X}, {Y}, {Z} - {WORLD}&a."
+    removed-position: "&6Vị trí đã được xóa thành công tại: &7{X}, {Y}, {Z} - {WORLD}&6."
+
+    # Sử dụng '{EGG_LIMIT}' để biết giới hạn trứng.
+    enter-setup-mode: "&aBạn đã vào chế độ thiết lập. Đập &l&7{EGG_LIMIT}&r&a khối để đặt vị trí."
+    exit-setup-mode: "&cBạn đã thoát khỏi chế độ thiết lập."
+
+    # Sử dụng '{EVENT_NAME}' để biết tên sự kiện.
+    event-created: "&aSự kiện &b'{EVENT_NAME}'&r&a đã được tạo thành công."
+    event-removed: "&6Sự kiện &b'{EVENT_NAME}'&r&6 đã được xóa thành công."
+    event-established: "&aSự kiện &b'{EVENT_NAME}'&r&a đã được thiết lập thành công."
+    setup-completed: "&eThiết lập đã hoàn tất!"
+    
+    # Sử dụng các khóa sau cho thông tin tiến độ: ['{EGGS}' => Eggs,
+    # '{LIMIT}' => Egg limit]
+    setup-progress: "&aBạn đã thêm một vị trí mới &7({EGGS}/{LIMIT})&a."
+
+    setup-spawn-entity: "&aThực thể đã được sinh ra thành công."
+    setup-despawn-entity: "&6Thực thể đã được xóa thành công."
+    setup-reset-data: "&aDữ liệu người chơi đã được đặt lại thành công!"
+    added-point: "&aMột điểm đã được thêm thành công."
+    point-removed: "&aMột điểm đã được xóa thành công."
+    reward-received: "&aBạn đã nhận phần thưởng của mình!"
+Form:
+  setup:
+    content: "&eChọn một tùy chọn:"
+    toggle1-button: "&l&9CHẾ ĐỘ THIẾT LẬP{LINE}&r&2(BẬT)"
+    toggle2-button: "&l&9CHẾ ĐỘ THIẾT LẬP{LINE}&r&c(TẮT)"
+    remove-button: "&l&9XÓA NHÂN VIÊN{LINE}&r&0Nhấn"
+    locations-button: "&l&9XEM VỊ TRÍ{LINE}&r&0Nhấn"
+    entity-button: "&l&9HỆ THỐNG TRỨNG{LINE}&r&0Nhấn"
+    reset-data-button: "&l&9ĐẶT LẠI DỮ LIỆU{LINE}&r&0Nhấn"
+    close-button: "&l&4ĐÓNG MENU{LINE}&r&0Nhấn"
+    locations:
+      content: "&r&c- &7{X} - {Y} - {Z}: {WORLD}"
+    entities:
+      content: "&eChọn một tùy chọn:"
+      button1: "&l&6SINH TRỨNG{LINE}&r&0Nhấn"
+      button2: "&l&6XÓA TRỨNG{LINE}&r&0Nhấn"
+    data:
+      confirm-content: "&bBạn có chắc chắn muốn đặt lại &l&cDỮ LIỆU&r&b không?"
+      button1: "&l&2Có"
+      button2: "&l&4Không"
+  event:
+    content: "&eChọn một tùy chọn:"
+    creator-button: "&l&sTẠO SỰ KIỆN{LINE}&r&0Nhấn"
+    remover-button: "&l&sXÓA SỰ KIỆN{LINE}&r&0Nhấn"
+    apply-button: "&l&sTHIẾT LẬP SỰ KIỆN{LINE}&r&0Nhấn"
+    list-button: "&l&sDANH SÁCH SỰ KIỆN{LINE}&r&0Nhấn"
+    close-button: "&l&4ĐÓNG MENU{LINE}&r&0Nhấn"
+    creator:
+      content: "&eTạo tên cho sự kiện của bạn:"
+      input: "Nhập tên sự kiện"
+    remover-content: "&eCác sự kiện có sẵn:"
+    apply:
+      content: "&eThiết lập một sự kiện:"
+      confirm-content: "&bBạn có chắc chắn muốn đặt sự kiện này làm mặc định không?"
+      button1: "&l&2Có"
+      button2: "&l&4Không"
+Item:
+  name: 
+    - "&r&l&dXÓA NHÂN VIÊN"
+    - "&r&7Nhấn chuột phải"
+    - "&r&7vào một vị trí"
+  # Sử dụng '{ITEM_COUNT}' để biết số lượng vật phẩm đã lưu.
+  saved-inventory: "&a{ITEM_COUNT} vật phẩm đã được lưu thành công trong kho phần thưởng!"
+Reward:
+  player-title: "&l&3HOÀN THÀNH"
+  player-subtitle: 
+    - "&eBạn đã thu thập tất cả"
+    - "&eTrứng Phục Sinh!"
+  # Sử dụng các khóa sau để biết thông tin sau:
+  # "{PLAYER}" => Tên người chơi
+  # "{EGGS}" => Mục tiêu trứng
+  # "&" => "§" (Màu sắc)
+  broadcast-message: "&7Người chơi &b{PLAYER}&r&7 đã hoàn thành tất cả {EGGS} &l&dTrứng Phục Sinh&r&7!"

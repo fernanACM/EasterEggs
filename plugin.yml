@@ -5,3 +5,23 @@ api: 5.3.0
 author: fernanACM
 website: https://github.com/fernanACM
 description: "Easter eggs for PocketMine-MP 5.0 servers"
+
+permissions:
+  eastereggs.cmd.acm:
+    default: op
+    description: "/eastereggs"
+  eastereggs.setup.cmd.acm:
+    default: op
+    description: "/eastereggs setup"
+  eastereggs.events.cmd.acm:
+    default: op
+    description: "/eastereggs events"
+  eastereggs.loot.cmd.acm:
+    default: op
+    description: "/eastereggs loot"
+  astereggs.enter.setupmode.acm:
+    default: op
+    description: "Enter in setup mode"
+  eastereggs.use.remover.wand.acm:
+    default: op
+    description: "Use the wand to remove eggs"

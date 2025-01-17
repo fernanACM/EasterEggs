@@ -20,13 +20,15 @@ use pocketmine\utils\SingletonTrait;
 
 use Vecnavium\FormsUI\SimpleForm;
 use Vecnavium\FormsUI\CustomForm;
+use Vecnavium\FormsUI\ModalForm;
 
 use fernanACM\EasterEggs\EasterEggs as EE;
 
 use fernanACM\EasterEggs\helper\EventHelper;
 use fernanACM\EasterEggs\language\LangKey;
 use fernanACM\EasterEggs\language\Language;
-use Vecnavium\FormsUI\ModalForm;
+
+use fernanACM\EasterEggs\utils\PluginUtils;
 
 final class EventForm{
     use SingletonTrait{
@@ -45,30 +47,44 @@ final class EventForm{
     public function open(Player $player): void{
         $form = new SimpleForm(function(Player $player, $data): void{
             if(is_null($data)){
+                PluginUtils::PlaySound($player, "random.pop2", 1, 5.3);
                 return;
             }
 
             switch($data){
                 case 0: // CREATE
                     $this->create($player);
+                    PluginUtils::PlaySound($player, "random.pop", 1, 5.3);
                 break;
 
                 case 1: // REMOVE
                     $this->remove($player);
+                    PluginUtils::PlaySound($player, "random.pop", 1, 5.3);
                 break;
 
                 case 2: // APPLY
                     $this->apply($player);
+                    PluginUtils::PlaySound($player, "random.pop", 1, 5.3);
                 break;
 
                 case 3: // LIST
                     $this->list($player);
+                    PluginUtils::PlaySound($player, "random.pop", 1, 5.3);
                 break;
 
                 case 4: // CLOSE
+                    PluginUtils::PlaySound($player, "random.pop2", 1, 5.3);
                 break;
             }
         });
+        $form->setTitle(TF::colorize("&l&9EASTEREGGS"));
+        $form->setContent(Language::getPlayerMessage($player, LangKey::EVENT_FORM_MAIN_CONTENT));
+        $form->addButton(Language::getPlayerMessage($player, LangKey::EVENT_FORM_MAIN_CREATOR_BUTTON),0,"textures/ui/mashup_PaintBrush");
+        $form->addButton(Language::getPlayerMessage($player, LangKey::EVENT_FORM_MAIN_REMOVER_BUTTON),0,"textures/ui/icon_trash");
+        $form->addButton(Language::getPlayerMessage($player, LangKey::EVENT_FORM_MAIN_APPLY_BUTTON),0,"textures/ui/icon_sign");
+        $form->addButton(Language::getPlayerMessage($player, LangKey::EVENT_FORM_MAIN_LIST_BUTTON),0,"textures/ui/icon_book_writable");
+        $form->addButton(Language::getPlayerMessage($player, LangKey::EVENT_FORM_MAIN_CLOSE_BUTTON),0,"textures/ui/cancel");
+        $player->sendForm($form);
     }
 
     /**
@@ -99,7 +115,7 @@ final class EventForm{
             Language::isSuccess($player, LangKey::SUCCESS_EVENT_CREATED, ["{EVENT_NAME}" => strval($data[0])]);
         });
         $custom->setTitle(TF::colorize("&l&9EASTEREGGS"));
-        $custom->addInput(Language::getMessage(LangKey::EVENT_FORM_CREATOR_CONTENT), LangKey::EVENT_FORM_CREATOR_INPUT);
+        $custom->addInput(Language::getPlayerMessage($player, LangKey::EVENT_FORM_CREATOR_CONTENT), Language::getPlayerMessage($player, LangKey::EVENT_FORM_CREATOR_INPUT));
         $player->sendForm($custom);
     }
 
@@ -128,9 +144,9 @@ final class EventForm{
             Language::isSuccess($player, LangKey::SUCCESS_EVENT_REMOVED, ["{EVENT_NAME}" => $eventName]);
         });
         $form->setTitle(TF::colorize("&l&9EASTEREGGS"));
-        $form->setContent(Language::getMessage(LangKey::EVENT_FORM_REMOVER_CONTENT));
+        $form->setContent(Language::getPlayerMessage($player, LangKey::EVENT_FORM_REMOVER_CONTENT));
         foreach($events as $event){
-            $form->addButton(TF::colorize($event."\n&r&l&c[------------]"));
+            $form->addButton(TF::colorize($event."\n&r&l&c[------------]"),0,"textures/ui/icon_map");
         }
         $player->sendForm($form);
     }
@@ -152,9 +168,11 @@ final class EventForm{
             }
         });
         $form->setTitle(TF::colorize("&l&9EASTEREGGS"));
+        $content = "";
         foreach($events as $event){
-            $form->setContent(TF::colorize("&e- &b$event&r\n"));
+            $content .= TF::colorize("&e- &b$event&r")."\n";
         }
+        $form->setContent($content);
         $form->addButton(TF::colorize("&l&2OK"),0,"textures/ui/check");
         $player->sendForm($form);
     }
@@ -190,7 +208,7 @@ final class EventForm{
                 $provider->reset();
                 // NEW PROFILE
                 foreach(Server::getInstance()->getOnlinePlayers() as $target){
-                    if($provider->exists($target)){
+                    if(!$provider->exists($target)){
                         $provider->create($target);
                     }
                 }
@@ -198,9 +216,9 @@ final class EventForm{
             });
         });
         $form->setTitle(TF::colorize("&l&9EASTEREGGS"));
-        $form->setContent(Language::getMessage(LangKey::EVENT_FORM_APPLY_CONTENT));
+        $form->setContent(Language::getPlayerMessage($player, LangKey::EVENT_FORM_APPLY_CONTENT));
         foreach($events as $event){
-            $form->addButton(TF::colorize($event."\n&r&l&2[------------]"));
+            $form->addButton(TF::colorize($event."\n&r&l&2[------------]"),0,"textures/ui/icon_map");
         }
         $player->sendForm($form);
     }
@@ -216,9 +234,9 @@ final class EventForm{
             $callable((bool)$data);
         });
         $modal->setTitle(TF::colorize("&l&9EASTEREGGS"));
-        $modal->setContent(Language::getMessage(LangKey::EVENT_FORM_CONFIRM_CONTENT));
-        $modal->setButton1(Language::getMessage(LangKey::EVENT_FORM_CONFIRM_BUTTON1)); // YES
-        $modal->setButton2(Language::getMessage(LangKey::EVENT_FORM_CONFIRM_BUTTON2)); // NO
+        $modal->setContent(Language::getPlayerMessage($player, LangKey::EVENT_FORM_CONFIRM_CONTENT));
+        $modal->setButton1(Language::getPlayerMessage($player, LangKey::EVENT_FORM_CONFIRM_BUTTON1)); // YES
+        $modal->setButton2(Language::getPlayerMessage($player, LangKey::EVENT_FORM_CONFIRM_BUTTON2)); // NO
         $player->sendForm($modal);
     }
 }

@@ -25,6 +25,7 @@ use fernanACM\EasterEggs\EasterEggs as EE;
 use fernanACM\EasterEggs\language\LangKey;
 use fernanACM\EasterEggs\language\Language;
 
+use fernanACM\EasterEggs\helper\EventHelper;
 use fernanACM\EasterEggs\helper\SetupHelper;
 
 use fernanACM\EasterEggs\utils\PluginUtils;
@@ -98,18 +99,19 @@ final class EasterEggManager{
             Language::isError($player, LangKey::ERROR_REACHED_THE_LIMIT);
             return;
         }
-        $this->claim($player, function(bool $result) use($provider, $player, $eggId, $reward, $message): void{
+        $this->claim($player, function(bool $result) use($provider, $player, $eggId, $reward, $message, $eggLimit): void{
             if($result){
                 $provider->addEgg($player, $eggId); // SUCCESS - ADDED POINT
                 Language::isSuccess($player, LangKey::SUCCESS_ADDED_POINT, [], false);
                 PluginUtils::PlaySound($player, "random.pop2", 1, 5.6);
                 (new PlayerAddPointEvent($eggId))->call(); // CALL EVENT
-            }else{
-                if($reward){
-                    $this->reward($player, $message); // REWARD
-                    
+                if($this->eggs($player) >= $eggLimit){
+                    if($reward){
+                        $this->reward($player, $message); // REWARD
+                        
+                    }
+                    $provider->setCompleted($player, true); // COMPLETED
                 }
-                $provider->setCompleted($player, true); // COMPLETED
             }
         });
     }
@@ -166,7 +168,6 @@ final class EasterEggManager{
             }
         }
         # (BROADCASTER)
-        $provider = EE::getInstance()->getProviderManager();
         if(boolval($config->getNested("Settings.EasterEgg.Reward.broadcast", true))){
             $message = TF::colorize($config->getNested("Settings.EasterEgg.Reward.broadcast-message"));
             $message = str_replace(["{PLAYER}", "{EGGS}"], [$player->getName(), $this->eggs($player)], $message);
@@ -263,5 +264,14 @@ final class EasterEggManager{
     public function claimedEgg(Player $player, string $eggId): bool{
         $provider = EE::getInstance()->getProviderManager();
         return $provider->exists($player) ? $provider->claimedEgg($player, $eggId) : false;
+    }
+
+    /**
+     * Get name of current event
+     * 
+     * @return string
+     */
+    public function eventName(): string{
+        return EventHelper::currentEvent() ?? "N/A";
     }
 }

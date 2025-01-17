@@ -1,1 +1,53 @@
+#  _____                 _                   _____                       
+# | ____|   __ _   ___  | |_    ___   _ __  | ____|   __ _    __ _   ___ 
+# |  _|    / _` | / __| | __|  / _ \ | '__| |  _|    / _` |  / _` | / __|
+# | |___  | (_| | \__ \ | |_  |  __/ | |    | |___  | (_| | | (_| | \__ \
+# |_____|  \__,_| |___/  \__|  \___| |_|    |_____|  \__, |  \__, | |___/
+#                                                    |___/   |___/
+#               by fernanACM
 
+# EasterEggs for PocketMine-MP 5.0 servers. Find the Eggs and get rewards 
+# by completing the Eggs goal.
+
+# DO NOT TOUCH!!
+config-version: "1.0.0"
+
+# Languages
+# "eng", // English
+# "spa", // Spanish
+# "ger", // German
+# "indo", // Indonesian
+# "vie" // Vietnamese
+language: eng
+
+# Prefix plugin
+Prefix: "&l&f[&aEasterEggs&f]&8»&r "
+
+# ====(SETIINGS)====
+Settings:
+  Form:
+    # Set the character limit to create an event
+    characteres: 16
+  EasterEgg:
+    # EasterEggs limit
+    egg-limit: 10
+
+    Reward:
+      # Use "true" or "false" to activate/deactivate this option
+      broadcast: true
+      # Use "true" or "false" to activate/deactivate this option
+      player-titles: true
+
+      Commands:
+        # Use "true" or "false" to activate/deactivate this option
+        execute: true
+        # Use "{PLAYER}" to run commands with the player name
+        list:
+          - give "{PLAYER}" apple 22
+      Items:
+        # Use "true" or "false" to activate/deactivate this option
+        receive: true
+        # Set the minimum number of items to receive
+        min: 5
+        # Set the maximum number of items to receive
+        max: 8

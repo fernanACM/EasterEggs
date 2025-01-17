@@ -14,12 +14,15 @@ namespace fernanACM\EasterEggs\provider;
 
 use pocketmine\player\Player;
 
+use pocketmine\utils\Config;
 use pocketmine\utils\SingletonTrait;
 
 use fernanACM\EasterEggs\EasterEggs as EE;
-use fernanACM\EasterEggs\const\StorageConst;
-use fernanACM\EasterEggs\provider\type\DatabaseProvider;
-use fernanACM\EasterEggs\provider\type\YamlProvider;
+use fernanACM\EasterEggs\const\DataConst;
+
+use fernanACM\EasterEggs\helper\EventHelper;
+
+use fernanACM\EasterEggs\addons\ScoreHudAddon;
 
 final class ProviderManager{
     use SingletonTrait{
@@ -27,8 +30,10 @@ final class ProviderManager{
         reset as protected;
     }
 
-    /** @var Provider|null $provider */
-    protected ?Provider $provider = null;
+    /** @var Config $data */
+    protected Config $data;
+
+    protected const FILE_NAME = "playerData.yml";
 
     public function __construct(){
         self::setInstance($this);
@@ -38,143 +43,220 @@ final class ProviderManager{
      * @return void
      */
     public function init(): void{
-        $this->loadProvider();
-        $this->provider->load();
+        $this->data = new Config(EE::getInstance()->getDataFolder(). self::FILE_NAME);
     }
 
     /**
-     * @return void
-     */
-    public function ending(): void{
-        $this->provider->unload();
-    } 
-
-    /**
-     * @return void
-     */
-    protected function loadProvider(): void{
-        $config = EE::getInstance()->config;
-        switch(strtolower(strval($config->getNested("Storage.provider")))){
-            case StorageConst::YML:
-            case StorageConst::YAML:
-                $this->provider = new YamlProvider(EE::getInstance());
-            break;
-
-            case StorageConst::SQLITE:
-            case StorageConst::MYSQL:
-                $this->provider = new DatabaseProvider(EE::getInstance());
-            break;
-
-            default:
-                $this->provider = new YamlProvider(EE::getInstance());
-            break;
-        }
-    }
-
-    /**
+     * Resets the supplier information you have collected.
+     * 
      * @return void
      */
     public function reset(): void{
-        $this->provider->reset();
+        $allData = $this->data->getAll();
+        foreach($allData as $playerName => $playerData){
+            $allData[$playerName] = [
+                DataConst::EGGS => [],
+                DataConst::EVENT_NAME => EventHelper::currentEvent(),
+                DataConst::COMPLETED => false
+            ];
+        }
+        $this->data->setAll($allData);
+        $this->data->save();
+        ScoreHudAddon::onUpdate();
     }
 
     /**
+     * @param Player $player
+     * @return array
+     */
+    protected function getPlayerData(Player $player): array{
+        return $this->data->get($player->getDisplayName(), [
+            DataConst::EGGS => [],
+            DataConst::EVENT_NAME => EventHelper::currentEvent(),
+            DataConst::COMPLETED => false
+        ]);
+    }
+
+    /**
+     * Check if player has an account.
+     * 
      * @param Player $player
      * @return boolean
      */
     public function exists(Player $player): bool{
-        return $this->provider->exists($player);
+        return $this->data->exists($player->getDisplayName());
     }
 
     /**
+     * Creates an account for the player.
+     * 
      * @param Player $player
      * @return void
      */
-    public function create(Player $player): void{
-        $this->provider->createAccount($player);
+    public function createAccount(Player $player): void{
+        if(!$this->exists($player)){
+            $this->data->set($player->getDisplayName(), [
+                DataConst::EGGS => [],
+                DataConst::EVENT_NAME => EventHelper::currentEvent(),
+                DataConst::COMPLETED => false
+            ]);
+            $this->data->save();
+            ScoreHudAddon::onUpdate();
+        }
     }
 
     /**
+     * Set event type via ID.
+     * 
      * @param Player $player
      * @param string $eventId
      * @return void
      */
     public function applyEventById(Player $player, string $eventId): void{
-        $this->provider->applyEventById($player, $eventId);
+        if(!$this->exists($player)) return;
+
+        $playerData = $this->getPlayerData($player);
+        $playerData[DataConst::EVENT_NAME] = $eventId;
+        $this->data->set($player->getDisplayName(), [$playerData]);
+        $this->data->save();
     }
 
     /**
+     * Our the event that the player is attending.
+     * 
      * @param Player $player
      * @return string
      */
     public function getEventName(Player $player): string{
-        return $this->provider->getEventName($player);
+        $playerData = $this->getPlayerData($player);
+        return strval($playerData[DataConst::EVENT_NAME] ?? "N/A");
     }
 
     /**
+     * Check if the goal has been achieved.
+     * 
+     * @param Player $player
+     * @return boolean
+     */
+    public function isCompleted(Player $player): bool{
+        $playerData = $this->getPlayerData($player);
+        return boolval($playerData[DataConst::COMPLETED] ?? false);
+    }
+
+    /**
+     * Sets whether the Eggs goal has been completed.
+     * 
      * @param Player $player
      * @param boolean $result
      * @return void
      */
     public function setCompleted(Player $player, bool $result): void{
-        $this->provider->setCompleted($player, $result);
+        if(!$this->exists($player)) return;
+
+        $playerData = $this->getPlayerData($player);
+        $playerData[DataConst::COMPLETED] = $result;
+
+        $this->data->set($player->getDisplayName(), $playerData);
+        $this->data->save();
     }
 
     /**
-     * @param Player $player
-     * @return boolean
-     */
-    public function isCompleted(Player $player): bool{
-        return $this->provider->isCompleted($player);
-    }
-
-    /**
+     * Get the number of eggs from the player.
+     * 
      * @param Player $player
      * @return integer
      */
     public function getEggs(Player $player): int{
-        return $this->provider->getEggs($player);
+        $playerData = $this->getPlayerData($player);
+        return count($playerData[DataConst::EGGS] ?? []);
     }
 
     /**
+     * Get the player's last egg ID.
+     * 
      * @param Player $player
      * @return integer
      */
     public function getLastEggId(Player $player): int{
-        return $this->provider->getLastEggId($player);
+        $playerData = $this->getPlayerData($player);
+        $claimedEggs = $playerData[DataConst::EGGS] ?? [];
+        $ids = array_map(function(string $eggId): int{
+            preg_match('/\d+/', $eggId, $matches); // SEARCH NUMBERS IN THE FORMAT "egg(n)"
+            return isset($matches[0]) ? (int)$matches[0] : 0;
+        }, $claimedEggs);
+        return empty($ids) ? 0 : max($ids);
     }
 
     /**
+     * @param Player $player
+     * @return array
+     */
+    protected function getEgg(Player $player): array{
+        $playerData = $this->getPlayerData($player);
+        return $playerData[DataConst::EGGS] ?? [];
+    }
+
+    /**
+     * Add an egg (point) to the player.
+     * 
      * @param Player $player
      * @param string $eggId
      * @return void
      */
     public function addEgg(Player $player, string $eggId): void{
-        $this->provider->addEgg($player, $eggId);
+        if(!$this->exists($player)) return;
+        if(isset($this->getEgg($player)[$eggId])) return;
+
+        $playerData = $this->getPlayerData($player);
+        $eggs = $playerData[DataConst::EGGS] ?? [];
+        if(in_array($eggId, $eggs)) return;
+
+        $eggs[] = $eggId;
+        $playerData[DataConst::EGGS] = $eggs;
+        $this->data->set($player->getDisplayName(), $playerData);
+        $this->data->save();
     }
 
     /**
+     * Remove an egg (point) from the player.
+     * 
      * @param Player $player
      * @param string $eggId
      * @return void
      */
     public function removeEgg(Player $player, string $eggId): void{
-        $this->provider->removeEgg($player, $eggId);
+        if(!$this->exists($player)) return;
+
+        $playerData = $this->getPlayerData($player);
+        $eggs = $playerData[DataConst::EGGS] ?? [];
+        $playerData[DataConst::EGGS] = array_values(array_diff($eggs, [$eggId]));
+
+        $this->data->set($player->getDisplayName(), $playerData);
+        $this->data->save();
     }
 
     /**
+     * Check if you have claimed the egg.
+     * 
      * @param Player $player
      * @param string $eggId
      * @return boolean
      */
     public function claimedEgg(Player $player, string $eggId): bool{
-        return $this->provider->claimedEgg($player, $eggId);
+        if(!$this->exists($player)) return false;
+        if(isset($this->getEgg($player)[$eggId])) return false;
+
+        $playerData = $this->getPlayerData($player);
+        $eggs = $playerData[DataConst::EGGS] ?? [];
+        return in_array($eggId, $eggs, true);
     }
 
     /**
-     * @return Provider
+     * Provider instance
+     * 
+     * @return Config
      */
-    public function getProvider(): Provider{
-        return $this->provider;
+    public function getConfig(): Config{
+        return $this->data;
     }
 }

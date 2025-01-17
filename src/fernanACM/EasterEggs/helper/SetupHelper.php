@@ -23,9 +23,6 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\item\Item;
 use pocketmine\item\VanillaItems;
 
-use pocketmine\item\enchantment\VanillaEnchantments as VE;
-use pocketmine\item\enchantment\EnchantmentInstance as EI;
-
 use fernanACM\EasterEggs\const\DataConst;
 use fernanACM\EasterEggs\const\NBTConst;
 use fernanACM\EasterEggs\EasterEggs as EE;
@@ -81,6 +78,19 @@ final class SetupHelper{
         self::$config->save();
         Language::isSuccess($player, LangKey::SUCCESS_SAVED_POSITION, [
             "{X}" => $x, "{Y}" => $y, "{Z}" => $z, "{WORLD}" => $world]);
+        // PROGRESS
+        $eggs = count(self::getEggs());
+        $limit = EE::getInstance()->getEasterEggManager()->eggLimit();
+        $player->sendMessage(EE::getPrefix().Language::getPlayerMessage($player, LangKey::SUCCESS_SETUP_PROGRESS, [
+            "{EGGS}" => $eggs,
+            "{LIMIT}" => $limit
+        ]));
+        // LIMIT
+        $manager = EE::getInstance()->getEasterEggManager();
+        if($manager->fullEggs()){
+            Language::isSuccess($player, LangKey::SUCCESS_SETUP_COMPLETED);
+            if(self::inSetupMode($player)) self::exitSetupMode($player);
+        }
     }
 
     /**
@@ -118,7 +128,6 @@ final class SetupHelper{
     public static function removeWand(): Item{
         $item = VanillaItems::BLAZE_ROD();
         $item->setNamedTag(CompoundTag::create()->setString(NBTConst::EASTER_EGGS, NBTConst::REMOVE));
-        $item->addEnchantment(new EI(VE::UNBREAKING()));
         $item->setCustomName(Language::getMessage(LangKey::ITEM_NAME));
         return $item;
     }
@@ -133,32 +142,37 @@ final class SetupHelper{
 
     /**
      * @param Player $player
+     * @param boolean $msg
      * @return void
      */
-    public static function toggleSetupMode(Player $player): void{
+    public static function toggleSetupMode(Player $player, bool $msg = true): void{
         if(self::inSetupMode($player)){
-            self::exitSetupMode($player);
-        }else self::setSetupMode($player);
+            self::exitSetupMode($player, $msg);
+        }else self::setSetupMode($player, $msg);
     }
 
     /**
      * @param Player $player
+     * @param boolean $msg
      * @return void
      */
-    public static function setSetupMode(Player $player): void{
+    public static function setSetupMode(Player $player, bool $msg = true): void{
         if(self::inSetupMode($player)) return;
         self::$setup[$player->getXuid()] = true;
-        Language::isSuccess($player, LangKey::SUCCESS_ENTER_SETUP_MODE);
+        if($msg) Language::isSuccess($player, LangKey::SUCCESS_ENTER_SETUP_MODE, [
+            "{EGG_LIMIT}" => EE::getInstance()->getEasterEggManager()->eggLimit()
+        ]);
     }
 
     /**
      * @param Player $player
+     * @param boolean $msg
      * @return void
      */
-    public static function exitSetupMode(Player $player): void{
+    public static function exitSetupMode(Player $player, bool $msg = true): void{
         if(!self::inSetupMode($player)) return;
         unset(self::$setup[$player->getXuid()]);
-        Language::isSuccess($player, LangKey::SUCCESS_EXIT_SETUP_MODE);
+        if($msg) Language::isSuccess($player, LangKey::SUCCESS_EXIT_SETUP_MODE);
     }
 
     /**

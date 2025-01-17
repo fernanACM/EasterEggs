@@ -1,0 +1,94 @@
+#  _____                 _                   _____                       
+# | ____|   __ _   ___  | |_    ___   _ __  | ____|   __ _    __ _   ___ 
+# |  _|    / _` | / __| | __|  / _ \ | '__| |  _|    / _` |  / _` | / __|
+# | |___  | (_| | \__ \ | |_  |  __/ | |    | |___  | (_| | | (_| | \__ \
+# |_____|  \__,_| |___/  \__|  \___| |_|    |_____|  \__, |  \__, | |___/
+#                                                    |___/   |___/
+#               von fernanACM
+
+# EasterEggs für PocketMine-MP 5.0 Server. Finde die Eier und erhalte Belohnungen,
+# indem du das Eier-Ziel erreichst.
+
+# NICHT BEARBEITEN!!
+language-version: "1.0.0"
+
+Nachrichten:
+  fehler:
+    keine-berechtigung: "&cDu hast keine Berechtigung dafür!"
+    volles-inventar: "&cDein Inventar ist voll!"
+    daten-fehlen: "&cDaten fehlen, um die Aktion abzuschließen..."
+    zeichenlimit-überschritten: "&cDu hast das Zeichenlimit überschritten!"
+    keine-verfügbaren-events: "&cKeine verfügbaren Events!"
+    event-existiert: "&cDas Event existiert bereits..."
+    event-nicht-gefunden: "&cDas angegebene Event wurde nicht gefunden."
+    eier-fehlen: "&cDie Konfiguration ist unvollständig! Einige Eier fehlen."
+    ziel-erreicht: "&cDu hast dieses Ziel bereits abgeschlossen!"
+    ei-bereits-abgeholt: "&cDu hast dieses Ei bereits abgeholt!"
+    limit-erreicht: "&cDu hast das erlaubte Limit erreicht!"
+    ungefordertes-ei: "&cDieses Ei wurde noch nicht abgeholt..."
+    ei-existiert: "&cDas Ei existiert bereits!"
+    keine-existierenden-eier: "&cKeine existierenden Eier..."
+  erfolg:
+    gespeicherte-position: "&aDie Position wurde erfolgreich gespeichert bei: &7{X}, {Y}, {Z} - {WORLD}&a."
+    entfernte-position: "&6Die Position wurde erfolgreich entfernt bei: &7{X}, {Y}, {Z} - {WORLD}&6."
+    setup-modus-aktiviert: "&aDu bist in den Setup-Modus gewechselt. Zerstöre &l&7{EGG_LIMIT}&r&a Block(e), um Standorte zu setzen."
+    setup-modus-beendet: "&cDu hast den Setup-Modus verlassen."
+    event-erstellt: "&aDas Event &b'{EVENT_NAME}'&r&a wurde erfolgreich erstellt."
+    event-entfernt: "&6Das Event &b'{EVENT_NAME}'&r&6 wurde erfolgreich entfernt."
+    event-festgelegt: "&aDas Event &b'{EVENT_NAME}'&r&a wurde erfolgreich festgelegt."
+    setup-abgeschlossen: "&eDas Setup wurde abgeschlossen!"
+    setup-fortschritt: "&aDu hast einen neuen Standort hinzugefügt &7({EGGS}/{LIMIT})&a."
+    entity-gespawnt: "&aDie Entität wurde erfolgreich gespawnt."
+    entity-entfernt: "&6Die Entität wurde erfolgreich entfernt."
+    daten-zurückgesetzt: "&aSpielerdaten wurden erfolgreich zurückgesetzt!"
+    punkt-hinzugefügt: "&aEin Punkt wurde erfolgreich hinzugefügt."
+    punkt-entfernt: "&aEin Punkt wurde erfolgreich entfernt."
+    belohnung-erhalten: "&aDu hast deine Belohnung erhalten!"
+Formular:
+  setup:
+    inhalt: "&eWähle eine Option:"
+    toggle1-button: "&l&9SETUP-MODUS{LINE}&r&2(AKTIV)"
+    toggle2-button: "&l&9SETUP-MODUS{LINE}&r&c(DEAKTIV)"
+    entfernen-button: "&l&9STANDORT ENTFERNEN{LINE}&r&0Klicken"
+    standorte-button: "&l&9STANDORTE ANSEHEN{LINE}&r&0Klicken"
+    entity-button: "&l&9EI-SYSTEM{LINE}&r&0Klicken"
+    daten-zurücksetzen-button: "&l&9DATEN ZURÜCKSETZEN{LINE}&r&0Klicken"
+    schließen-button: "&l&4MENÜ SCHLIESSEN{LINE}&r&0Klicken"
+    standorte:
+      inhalt: "&r&c- &7{X} - {Y} - {Z}: {WORLD}"
+    entitäten:
+      inhalt: "&eWähle eine Option:"
+      button1: "&l&6EIER SPAWNEN{LINE}&r&0Klicken"
+      button2: "&l&6EIER ENTFERNEN{LINE}&r&0Klicken"
+    daten:
+      bestätigen-inhalt: "&bBist du sicher, dass du die Spieler-&l&cDATEN&r&b zurücksetzen möchtest?"
+      button1: "&l&2Ja"
+      button2: "&l&4Nein"
+  event:
+    inhalt: "&eWähle eine Option:"
+    ersteller-button: "&l&sEVENT ERSTELLEN{LINE}&r&0Klicken"
+    entferner-button: "&l&sEVENT LÖSCHEN{LINE}&r&0Klicken"
+    anwenden-button: "&l&sEVENT FESTLEGEN{LINE}&r&0Klicken"
+    liste-button: "&l&sEVENTS LISTEN{LINE}&r&0Klicken"
+    schließen-button: "&l&4MENÜ SCHLIESSEN{LINE}&r&0Klicken"
+    ersteller:
+      inhalt: "&eGib einen Namen für dein Event ein:"
+      eingabe: "Eventnamen eingeben"
+    entferner-inhalt: "&eVerfügbare Events:"
+    anwenden:
+      inhalt: "&eEin Event festlegen:"
+      bestätigen-inhalt: "&bBist du sicher, dass du dieses Event als Standard festlegen möchtest?"
+      button1: "&l&2Ja"
+      button2: "&l&4Nein"
+Gegenstand:
+  name: 
+    - "&r&l&dSTANDORT-ENTFERNER"
+    - "&r&7Rechtsklick"
+    - "&r&7auf einen Standort"
+  gespeichertes-inventar: "&a{ITEM_COUNT} Gegenstand/Gegenstände wurden erfolgreich im Belohnungsinventar gespeichert!"
+Belohnung:
+  spieler-titel: "&l&3ABGESCHLOSSEN"
+  spieler-untertitel: 
+    - "&eDu hast alle"
+    - "&eOstereier gefunden!"
+  broadcast-nachricht: "&7Spieler &b{PLAYER}&r&7 hat alle {EGGS} &l&dOstereier&r&7 abgeschlossen!"

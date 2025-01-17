@@ -17,11 +17,12 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\SingletonTrait;
-
 # LIBS
 use Vecnavium\FormsUI\FormsUI;
 
 use muqsit\invmenu\InvMenu;
+use muqsit\invmenu\InvMenuHandler;
+
 use muqsit\simplepackethandler\SimplePacketHandler;
 
 use CortexPE\Commando\PacketHooker;
@@ -34,6 +35,16 @@ use fernanACM\EasterEggs\language\LanguageManager;
 use fernanACM\EasterEggs\manager\LootManager;
 use fernanACM\EasterEggs\manager\EasterEggManager;
 use fernanACM\EasterEggs\provider\ProviderManager;
+use fernanACM\EasterEggs\entities\EntityManager;
+
+use fernanACM\EasterEggs\commands\EasterEggCommand;
+
+use fernanACM\EasterEggs\addons\ScoreHudAddon;
+
+use fernanACM\EasterEggs\helper\EventHelper;
+use fernanACM\EasterEggs\helper\SetupHelper;
+
+use fernanACM\EasterEggs\utils\SkinUtils;
 
 class EasterEggs extends PluginBase{
     use SingletonTrait{
@@ -65,13 +76,13 @@ class EasterEggs extends PluginBase{
         $this->loadCommands();
         $this->loadEntities();
         $this->loadEvents();
+        $this->getLootManager()->loadInventory();
     }
 
     /**
      * @return void
      */
     public function onDisable(): void{
-        $this->getProviderManager()->ending();
         $this->getLootManager()->saveInventory();
     }
 
@@ -84,6 +95,9 @@ class EasterEggs extends PluginBase{
         $this->getLanguageManager()->init();
         $this->getProviderManager()->init();
         $this->getLootManager()->init();
+        EventHelper::init();
+        SetupHelper::init();
+        SkinUtils::init();
     }
 
     /**
@@ -131,6 +145,7 @@ class EasterEggs extends PluginBase{
                 return;
             }
         }
+        if(!InvMenuHandler::isRegistered()) InvMenuHandler::register($this);
         if(!PacketHooker::isRegistered()) PacketHooker::register($this);
         # Update
         libPiggyUpdateChecker::init($this);
@@ -140,19 +155,22 @@ class EasterEggs extends PluginBase{
      * @return void
      */
     protected function loadCommands(): void{
+        $this->getServer()->getCommandMap()->register("eastereggs", new EasterEggCommand);
     }
 
     /**
      * @return void
      */
     protected function loadEntities(): void{
+        $this->getEntityManager()->init();
     }
 
     /**
      * @return void
      */
     protected function loadEvents(): void{
-
+        $this->getServer()->getPluginManager()->registerEvents(new Event, $this);
+        ScoreHudAddon::init();
     }
 
     /**
@@ -167,6 +185,13 @@ class EasterEggs extends PluginBase{
      */
     public function getLootManager(): LootManager{
         return LootManager::getInstance();
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager(): EntityManager{
+        return EntityManager::getInstance();
     }
 
     /**

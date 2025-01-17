@@ -17,6 +17,8 @@ use pocketmine\utils\Config;
 use fernanACM\EasterEggs\EasterEggs as EE;
 use fernanACM\EasterEggs\const\EventConst;
 
+use fernanACM\EasterEggs\addons\ScoreHudAddon;
+
 final class EventHelper{
 
     /** @var Config $config */
@@ -29,8 +31,8 @@ final class EventHelper{
      */
     public static function init(): void{
         self::$config = new Config(EE::getInstance()->getDataFolder(). self::FILE_NAME, Config::YAML, [
-            EventConst::EVENTS => ["ChristmasACM", "Valentine's Day"],
-            EventConst::CURRENT_EVENT => ""
+            EventConst::EVENTS => ["EasterEggs", "ChristmasACM", "Valentine's Day"],
+            EventConst::CURRENT_EVENT => "EasterEggs"
         ]);
     }
 
@@ -52,6 +54,7 @@ final class EventHelper{
             $events[] = $eventName;
             self::$config->set(EventConst::EVENTS, $events);
             self::$config->save();
+            ScoreHudAddon::onUpdate();
         }
     }
 
@@ -65,6 +68,7 @@ final class EventHelper{
             $events = array_filter($events, fn($event) => $event !== $eventName);
             self::$config->set(EventConst::EVENTS, array_values($events));
             self::$config->save();
+            ScoreHudAddon::onUpdate();
         }
     }
 
@@ -72,9 +76,10 @@ final class EventHelper{
      * @return void
      */
     public static function reset(): void{
-        self::$config->set(EventConst::EVENTS, ["ChristmasACM", "Valentine's Day"]);
-        self::$config->set(EventConst::CURRENT_EVENT, "");
+        self::$config->set(EventConst::EVENTS, ["EasterEggs", "ChristmasACM", "Valentine's Day"]);
+        self::$config->set(EventConst::CURRENT_EVENT, "EasterEggs");
         self::$config->save();
+        ScoreHudAddon::onUpdate();
     }
 
     /**
@@ -92,6 +97,7 @@ final class EventHelper{
         if(self::exists($eventName)){
             self::$config->set(EventConst::CURRENT_EVENT, $eventName);
             self::$config->save();
+            ScoreHudAddon::onUpdate();
         }
     }
 

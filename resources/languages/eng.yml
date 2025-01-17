@@ -1,0 +1,109 @@
+#  _____                 _                   _____                       
+# | ____|   __ _   ___  | |_    ___   _ __  | ____|   __ _    __ _   ___ 
+# |  _|    / _` | / __| | __|  / _ \ | '__| |  _|    / _` |  / _` | / __|
+# | |___  | (_| | \__ \ | |_  |  __/ | |    | |___  | (_| | | (_| | \__ \
+# |_____|  \__,_| |___/  \__|  \___| |_|    |_____|  \__, |  \__, | |___/
+#                                                    |___/   |___/
+#               by fernanACM
+
+# EasterEggs for PocketMine-MP 5.0 servers. Find the eggs and earn rewards 
+# by completing the Egg objective.
+
+# DO NOT TOUCH!!
+language-version: "1.0.0"
+
+Messages:
+  error:
+    no-permission: "&cYou don't have permission for this!"
+    full-inventory: "&cYour inventory is full!"
+    lack-of-data: "&cData is missing to complete the action..."
+    characteres-limit: "&cYou have exceeded the character limit!"
+    no-existing-events: "&cNo existing events!"
+    existing-event: "&cThe event already exists..."
+    event-not-found: "&cThe specified event was not found."
+    eggs-are-missing: "&cThe configuration is incomplete! Some eggs are missing."
+    it-is-completed: "&cYou have already completed this objective!"
+    it-is-claimed: "&cYou have already claimed this egg!"
+    reached-the-limit: "&cYou have reached the allowed limit!"
+    unclaimed-egg: "&cThis egg has not been claimed yet..."
+    existing-egg: "&cThe egg already exists!"
+    no-existing-eggs: "&cNo existing eggs..."
+  success:
+    # Use the following keys to know the coordinates and world name
+    # where the locations have been set: ["{X}", "{Y}", "{Z}", "{WORLD}"]
+    saved-position: "&aThe position has been successfully saved at: &7{X}, {Y}, {Z} - {WORLD}&a."
+    removed-position: "&6The position has been successfully removed at: &7{X}, {Y}, {Z} - {WORLD}&6."
+
+    # Use '{EGG_LIMIT}' to know the egg limit.
+    enter-setup-mode: "&aYou have entered setup mode. Break &l&7{EGG_LIMIT}&r&a block(s) to set locations."
+    exit-setup-mode: "&cYou have exited setup mode."
+
+    # Use '{EVENT_NAME}' to know the event name.
+    event-created: "&aThe event &b'{EVENT_NAME}'&r&a has been successfully created."
+    event-removed: "&6The event &b'{EVENT_NAME}'&r&6 has been successfully removed."
+    event-established: "&aThe event &b'{EVENT_NAME}'&r&a has been successfully set."
+    setup-completed: "&eSetup has been completed!"
+    
+    # Use the following keys for progress information: ['{EGGS}' => Eggs,
+    # '{LIMIT}' => Egg limit]
+    setup-progress: "&aYou have added a new location &7({EGGS}/{LIMIT})&a."
+
+    setup-spawn-entity: "&aThe entity has been successfully spawned."
+    setup-despawn-entity: "&6The entity has been successfully removed."
+    setup-reset-data: "&aPlayer data has been successfully reset!"
+    added-point: "&aA point has been successfully added."
+    point-removed: "&aA point has been successfully removed."
+    reward-received: "&aYou have received your reward!"
+Form:
+  setup:
+    content: "&eSelect an option:"
+    toggle1-button: "&l&9SETUP MODE{LINE}&r&2(ENABLED)"
+    toggle2-button: "&l&9SETUP MODE{LINE}&r&c(DISABLED)"
+    remove-button: "&l&9REMOVER STAFF{LINE}&r&0Click"
+    locations-button: "&l&9VIEW LOCATIONS{LINE}&r&0Click"
+    entity-button: "&l&9EGG SYSTEM{LINE}&r&0Click"
+    reset-data-button: "&l&9RESET DATA{LINE}&r&0Click"
+    close-button: "&l&4CLOSE MENU{LINE}&r&0Click"
+    locations:
+      content: "&r&c- &7{X} - {Y} - {Z}: {WORLD}"
+    entities:
+      content: "&eSelect an option:"
+      button1: "&l&6SPAWN EGGS{LINE}&r&0Click"
+      button2: "&l&6REMOVE EGGS{LINE}&r&0Click"
+    data:
+      confirm-content: "&bAre you sure you want to reset the player &l&cDATA&r&b?"
+      button1: "&l&2Yes"
+      button2: "&l&4No"
+  event:
+    content: "&eSelect an option:"
+    creator-button: "&l&sCREATE AN EVENT{LINE}&r&0Click"
+    remover-button: "&l&sDELETE AN EVENT{LINE}&r&0Click"
+    apply-button: "&l&sSET AN EVENT{LINE}&r&0Click"
+    list-button: "&l&sLIST EVENTS{LINE}&r&0Click"
+    close-button: "&l&4CLOSE MENU{LINE}&r&0Click"
+    creator:
+      content: "&eCreate a name for your event:"
+      input: "Enter the event name"
+    remover-content: "&eAvailable events:"
+    apply:
+      content: "&eSet an event:"
+      confirm-content: "&bAre you sure you want to set this event as default?"
+      button1: "&l&2Yes"
+      button2: "&l&4No"
+Item:
+  name: 
+    - "&r&l&dREMOVER STAFF"
+    - "&r&7Right-click"
+    - "&r&7on a location"
+  # Use '{ITEM_COUNT}' to know the number of items saved.
+  saved-inventory: "&a{ITEM_COUNT} item(s) have been successfully saved in the reward inventory!"
+Reward:
+  player-title: "&l&3COMPLETED"
+  player-subtitle: 
+    - "&eYou have collected all the"
+    - "&eEasterEggs!"
+  # Use these keys to get the following information:
+  # "{PLAYER}" => Player name
+  # "{EGGS}" => Egg goal
+  # "&" => "§" (Color)
+  broadcast-message: "&7Player &b{PLAYER}&r&7 has completed all {EGGS} &l&dEasterEggs&r&7!"
