@@ -59,7 +59,7 @@ Form:
     content: "&eChọn một tùy chọn:"
     toggle1-button: "&l&9CHẾ ĐỘ THIẾT LẬP{LINE}&r&2(BẬT)"
     toggle2-button: "&l&9CHẾ ĐỘ THIẾT LẬP{LINE}&r&c(TẮT)"
-    remove-button: "&l&9XÓA NHÂN VIÊN{LINE}&r&0Nhấn"
+    remove-button: "&l&9GẬY LOẠI BỎ{LINE}&r&0Nhấp"
     locations-button: "&l&9XEM VỊ TRÍ{LINE}&r&0Nhấn"
     entity-button: "&l&9HỆ THỐNG TRỨNG{LINE}&r&0Nhấn"
     reset-data-button: "&l&9ĐẶT LẠI DỮ LIỆU{LINE}&r&0Nhấn"
@@ -105,5 +105,6 @@ Reward:
   # Sử dụng các khóa sau để biết thông tin sau:
   # "{PLAYER}" => Tên người chơi
   # "{EGGS}" => Mục tiêu trứng
+  # "{EVENT_NAME}" => Tên sự kiện
   # "&" => "§" (Màu sắc)
-  broadcast-message: "&7Người chơi &b{PLAYER}&r&7 đã hoàn thành tất cả {EGGS} &l&dTrứng Phục Sinh&r&7!"
+  broadcast-message: "&7Người chơi &b{PLAYER}&r&7 đã hoàn thành thành công {EGGS} &l&dEasterEggs&r&7 của sự kiện &r&b{EVENT_NAME}&r&7!"

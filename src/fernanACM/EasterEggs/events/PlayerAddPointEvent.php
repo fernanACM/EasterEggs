@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace fernanACM\EasterEggs\events;
 
+use pocketmine\player\Player;
+
 use pocketmine\event\player\PlayerEvent;
 
 use pocketmine\event\Cancellable;
@@ -26,9 +28,11 @@ class PlayerAddPointEvent extends PlayerEvent implements Cancellable{
     protected string $eggId;
 
     /**
+     * @param Player $player
      * @param string $eggId
      */
-    public function __construct(string $eggId){
+    public function __construct(Player $player, string $eggId){
+        $this->player = $player;
         $this->eggId = $eggId;
     }
 

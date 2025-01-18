@@ -6,7 +6,7 @@
 #                                                    |___/   |___/
 #               oleh fernanACM
 
-# EasterEggs untuk server PocketMine-MP 5.0. Temukan telur-telur dan dapatkan hadiah 
+# EasterEggs untuk server PocketMine-MP 5.0. Temukan telur dan dapatkan hadiah 
 # dengan menyelesaikan tujuan Telur.
 
 # JANGAN DIUBAH!!
@@ -15,95 +15,96 @@ language-version: "1.0.0"
 Messages:
   error:
     no-permission: "&cAnda tidak memiliki izin untuk ini!"
-    full-inventory: "&cInventori Anda penuh!"
-    lack-of-data: "&cData hilang untuk menyelesaikan aksi ini..."
+    full-inventory: "&cInventaris Anda penuh!"
+    lack-of-data: "&cData hilang untuk menyelesaikan tindakan ini..."
     characteres-limit: "&cAnda telah melebihi batas karakter!"
-    no-existing-events: "&cTidak ada event yang tersedia!"
-    existing-event: "&cEvent sudah ada..."
-    event-not-found: "&cEvent yang dimaksud tidak ditemukan."
-    eggs-are-missing: "&cKonfigurasi belum lengkap! Beberapa telur hilang."
-    it-is-completed: "&cAnda sudah menyelesaikan tujuan ini!"
-    it-is-claimed: "&cAnda sudah mengklaim telur ini!"
+    no-existing-events: "&cTidak ada acara yang tersedia!"
+    existing-event: "&cAcara ini sudah ada..."
+    event-not-found: "&cAcara yang ditentukan tidak ditemukan."
+    eggs-are-missing: "&cKonfigurasi tidak lengkap! Beberapa telur hilang."
+    it-is-completed: "&cAnda telah menyelesaikan tujuan ini!"
+    it-is-claimed: "&cAnda telah mengklaim telur ini!"
     reached-the-limit: "&cAnda telah mencapai batas yang diizinkan!"
     unclaimed-egg: "&cTelur ini belum diklaim..."
     existing-egg: "&cTelur ini sudah ada!"
     no-existing-eggs: "&cTidak ada telur yang tersedia..."
   success:
     # Gunakan kunci berikut untuk mengetahui koordinat dan nama dunia
-    # di mana lokasi telah ditetapkan: ["{X}", "{Y}", "{Z}", "{WORLD}"]
+    # di mana lokasi telah disimpan: ["{X}", "{Y}", "{Z}", "{WORLD}"]
     saved-position: "&aPosisi berhasil disimpan di: &7{X}, {Y}, {Z} - {WORLD}&a."
     removed-position: "&6Posisi berhasil dihapus di: &7{X}, {Y}, {Z} - {WORLD}&6."
 
     # Gunakan '{EGG_LIMIT}' untuk mengetahui batas telur.
-    enter-setup-mode: "&aAnda telah memasuki mode pengaturan. Hancurkan &l&7{EGG_LIMIT}&r&a blok untuk menetapkan lokasi."
+    enter-setup-mode: "&aAnda telah masuk ke mode pengaturan. Hancurkan &l&7{EGG_LIMIT}&r&a blok untuk menetapkan lokasi."
     exit-setup-mode: "&cAnda telah keluar dari mode pengaturan."
 
-    # Gunakan '{EVENT_NAME}' untuk mengetahui nama event.
-    event-created: "&aEvent &b'{EVENT_NAME}'&r&a berhasil dibuat."
-    event-removed: "&6Event &b'{EVENT_NAME}'&r&6 berhasil dihapus."
-    event-established: "&aEvent &b'{EVENT_NAME}'&r&a berhasil ditetapkan."
+    # Gunakan '{EVENT_NAME}' untuk mengetahui nama acara.
+    event-created: "&aAcara &b'{EVENT_NAME}'&r&a berhasil dibuat."
+    event-removed: "&6Acara &b'{EVENT_NAME}'&r&6 berhasil dihapus."
+    event-established: "&aAcara &b'{EVENT_NAME}'&r&a berhasil ditetapkan."
     setup-completed: "&ePengaturan telah selesai!"
     
-    # Gunakan kunci berikut untuk informasi progres: ['{EGGS}' => Telur,
+    # Gunakan kunci berikut untuk informasi kemajuan: ['{EGGS}' => Telur,
     # '{LIMIT}' => Batas telur]
     setup-progress: "&aAnda telah menambahkan lokasi baru &7({EGGS}/{LIMIT})&a."
 
-    setup-spawn-entity: "&aEntity berhasil di-spawn."
-    setup-despawn-entity: "&6Entity berhasil dihapus."
-    setup-reset-data: "&aData pemain berhasil direset!"
+    setup-spawn-entity: "&aEntitas berhasil dimunculkan."
+    setup-despawn-entity: "&6Entitas berhasil dihapus."
+    setup-reset-data: "&aData pemain berhasil diatur ulang!"
     added-point: "&aPoin berhasil ditambahkan."
     point-removed: "&aPoin berhasil dihapus."
     reward-received: "&aAnda telah menerima hadiah Anda!"
 Form:
   setup:
-    content: "&ePilih opsi:"
-    toggle1-button: "&l&9MODE PENGATURAN{LINE}&r&2(AKTIF)"
-    toggle2-button: "&l&9MODE PENGATURAN{LINE}&r&c(TIDAK AKTIF)"
-    remove-button: "&l&9HAPUS STAFF{LINE}&r&0Klik"
+    content: "&ePilih sebuah opsi:"
+    toggle1-button: "&l&9MODE PENGATURAN{LINE}&r&2(DI AKTIFKAN)"
+    toggle2-button: "&l&9MODE PENGATURAN{LINE}&r&c(DI NONAKTIFKAN)"
+    remove-button: "&l&9HAPUS TONGKAT{LINE}&r&0Klik"
     locations-button: "&l&9LIHAT LOKASI{LINE}&r&0Klik"
     entity-button: "&l&9SISTEM TELUR{LINE}&r&0Klik"
-    reset-data-button: "&l&9RESET DATA{LINE}&r&0Klik"
+    reset-data-button: "&l&9ATUR ULANG DATA{LINE}&r&0Klik"
     close-button: "&l&4TUTUP MENU{LINE}&r&0Klik"
     locations:
       content: "&r&c- &7{X} - {Y} - {Z}: {WORLD}"
     entities:
-      content: "&ePilih opsi:"
-      button1: "&l&6SPAWN TELUR{LINE}&r&0Klik"
+      content: "&ePilih sebuah opsi:"
+      button1: "&l&6MUNCULKAN TELUR{LINE}&r&0Klik"
       button2: "&l&6HAPUS TELUR{LINE}&r&0Klik"
     data:
-      confirm-content: "&bApakah Anda yakin ingin mereset &l&cDATA&r&b pemain?"
+      confirm-content: "&bApakah Anda yakin ingin mengatur ulang &l&cDATA&r&b pemain?"
       button1: "&l&2Ya"
       button2: "&l&4Tidak"
   event:
-    content: "&ePilih opsi:"
-    creator-button: "&l&sBUAT EVENT{LINE}&r&0Klik"
-    remover-button: "&l&sHAPUS EVENT{LINE}&r&0Klik"
-    apply-button: "&l&sTETAPKAN EVENT{LINE}&r&0Klik"
-    list-button: "&l&sDAFTAR EVENT{LINE}&r&0Klik"
+    content: "&ePilih sebuah opsi:"
+    creator-button: "&l&sBUAT ACARA{LINE}&r&0Klik"
+    remover-button: "&l&sHAPUS ACARA{LINE}&r&0Klik"
+    apply-button: "&l&sTETAPKAN ACARA{LINE}&r&0Klik"
+    list-button: "&l&sDAFTAR ACARA{LINE}&r&0Klik"
     close-button: "&l&4TUTUP MENU{LINE}&r&0Klik"
     creator:
-      content: "&eBuat nama untuk event Anda:"
-      input: "Masukkan nama event"
-    remover-content: "&eEvent yang tersedia:"
+      content: "&eBuat nama untuk acara Anda:"
+      input: "Masukkan nama acara"
+    remover-content: "&eAcara yang tersedia:"
     apply:
-      content: "&eTetapkan event:"
-      confirm-content: "&bApakah Anda yakin ingin menetapkan event ini sebagai default?"
+      content: "&eTetapkan sebuah acara:"
+      confirm-content: "&bApakah Anda yakin ingin menetapkan acara ini sebagai default?"
       button1: "&l&2Ya"
       button2: "&l&4Tidak"
 Item:
   name: 
-    - "&r&l&dHAPUS STAFF"
+    - "&r&l&dTONGKAT PENGHAPUS"
     - "&r&7Klik kanan"
-    - "&r&7di lokasi"
+    - "&r&7di sebuah lokasi"
   # Gunakan '{ITEM_COUNT}' untuk mengetahui jumlah item yang disimpan.
-  saved-inventory: "&a{ITEM_COUNT} item berhasil disimpan di inventori hadiah!"
+  saved-inventory: "&a{ITEM_COUNT} item berhasil disimpan dalam inventaris hadiah!"
 Reward:
   player-title: "&l&3SELESAI"
   player-subtitle: 
     - "&eAnda telah mengumpulkan semua"
     - "&eTelur Paskah!"
-  # Gunakan kunci berikut untuk mendapatkan informasi:
+  # Gunakan kunci ini untuk mendapatkan informasi berikut:
   # "{PLAYER}" => Nama pemain
   # "{EGGS}" => Tujuan telur
+  # "{EVENT_NAME}" => Nama Acara
   # "&" => "§" (Warna)
-  broadcast-message: "&7Pemain &b{PLAYER}&r&7 telah mengumpulkan semua {EGGS} &l&dTelur Paskah&r&7!"
+  broadcast-message: "&7Pemain &b{PLAYER}&r&7 berhasil menyelesaikan {EGGS} &l&dEasterEggs&r&7 dari acara &r&b{EVENT_NAME}&r&7!"

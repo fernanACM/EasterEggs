@@ -105,5 +105,6 @@ Reward:
   # Usa estas'keys' para recibir la siguiente información:
   # "{PLAYER}" => nombre del jugador
   # "{EGGS}" => Meta de huevos
+  # "{EVENT_NAME}" => Nombre del Evento
   # "&" => "§" (Color)
-  broadcast-message: "&7¡El jugador &b{PLAYER}&r&7 ha conseguido completar los {EGGS} &l&dEasterEggs&r&7!"
+  broadcast-message: "&7¡El jugador &b{PLAYER}&r&7 ha conseguido completar los {EGGS} &l&dEasterEggs&r&7 del evento &r&b{EVENT_NAME}&r&7!"

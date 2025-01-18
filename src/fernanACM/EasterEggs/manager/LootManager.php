@@ -61,6 +61,7 @@ final class LootManager{
     public function getInvMenu(): InvMenu{
         $menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
         $menu->setName(TF::colorize("&l&2EASTEREGGS LOOT (EDIT)"));
+        $menu->getInventory()->setContents($this->getContent());
         return $menu;
     }
 

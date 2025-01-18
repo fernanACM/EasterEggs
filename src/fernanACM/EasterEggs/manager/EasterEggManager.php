@@ -104,7 +104,7 @@ final class EasterEggManager{
                 $provider->addEgg($player, $eggId); // SUCCESS - ADDED POINT
                 Language::isSuccess($player, LangKey::SUCCESS_ADDED_POINT, [], false);
                 PluginUtils::PlaySound($player, "random.pop2", 1, 5.6);
-                (new PlayerAddPointEvent($eggId))->call(); // CALL EVENT
+                (new PlayerAddPointEvent($player, $eggId))->call(); // CALL EVENT
                 if($this->eggs($player) >= $eggLimit){
                     if($reward){
                         $this->reward($player, $message); // REWARD
@@ -133,7 +133,7 @@ final class EasterEggManager{
         $callable(true);
         $num = ProviderManager::getInstance()->getLastEggId($player);
         $eggId = $this->idNumToEggId($num);
-        (new PlayerClaimEvent($eggId))->call(); // CALL EVENT
+        (new PlayerClaimEvent($player, $eggId))->call(); // CALL EVENT
     }
 
     /**
@@ -169,8 +169,11 @@ final class EasterEggManager{
         }
         # (BROADCASTER)
         if(boolval($config->getNested("Settings.EasterEgg.Reward.broadcast", true))){
-            $message = TF::colorize($config->getNested("Settings.EasterEgg.Reward.broadcast-message"));
-            $message = str_replace(["{PLAYER}", "{EGGS}"], [$player->getName(), $this->eggs($player)], $message);
+            $message = Language::getPlayerMessage($player, LangKey::REWARD_BROADCAST, [
+                "{PLAYER}" => $player->getName(),
+                "{EGGS}" => $this->eggs($player),
+                "[EVENT_NAME]" => $this->eventName()
+            ]);
             $server->broadcastMessage(EE::getPrefix().$message);
         }
         # (PLAYER TITLES)
@@ -184,7 +187,7 @@ final class EasterEggManager{
             Language::isSuccess($player, LangKey::SUCCESS_REWARD_RECEIVED, [], false);
             PluginUtils::PlaySound($player, "random.levelup", 1, 2.3);
         }
-        (new PlayerRewardEvent)->call(); // CALL EVENT
+        (new PlayerRewardEvent($player))->call(); // CALL EVENT
     }
 
     /**
@@ -210,7 +213,7 @@ final class EasterEggManager{
         $provider->removeEgg($player, $eggId); // SUCCESS - POINT REMOVED
         Language::isSuccess($player, LangKey::SUCCESS_ADDED_POINT, [], false);
         PluginUtils::PlaySound($player, "mob.irongolem.death", 1, 2.1);
-        (new PlayerRemovePointEvent($eggId))->call(); // CALL EVENT
+        (new PlayerRemovePointEvent($player, $eggId))->call(); // CALL EVENT
     }
 
     /**

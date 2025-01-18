@@ -16,6 +16,8 @@ use pocketmine\event\Listener;
 
 use pocketmine\block\Block;
 
+use pocketmine\world\Position;
+
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerLoginEvent;
 
@@ -31,6 +33,7 @@ use fernanACM\EasterEggs\helper\SetupHelper as SH;
 
 use fernanACM\EasterEggs\language\LangKey;
 use fernanACM\EasterEggs\language\Language;
+
 use fernanACM\EasterEggs\permissions\Perms;
 
 class Event implements Listener{
@@ -110,19 +113,16 @@ class Event implements Listener{
 
         SH::removeEgg($player, $block); // REMOVE LOCATION
         $world = $block->getPosition()->getWorld();
-        $blockBounds = $block->getCollisionBoxes();
-        if(empty($blockBounds)){
-            return;
-        }
         foreach($world->getEntities() as $entity){
             if(!$entity instanceof EasterEggEntity){
                 continue;
             }
-            foreach($blockBounds as $bound){
-                if($entity->getBoundingBox()->intersectsWith($bound)){
-                    $entity->flagForDespawn(); // MAKE THE ENTITY DISAPPEAR
-                    break;
-                }
+
+            $entityPosition = $entity->getPosition()->floor();
+            $blockAbove = $block->getPosition()->add(0, 1, 0)->floor();
+            if($entityPosition->equals($blockAbove)){
+                $entity->flagForDespawn();
+                break;
             }
         }
     }
@@ -135,7 +135,28 @@ class Event implements Listener{
         $transaction = $event->getTransaction();
         foreach($transaction->getBlocks() as [$x, $y, $z, $block]){
             /** @var Block $block */
-            if(SH::eggExists($block)) $event->cancel();
+            if(SH::eggExists($block)){
+                $event->cancel();
+                return;
+            }
+
+            $blockPosition = $block->getPosition();
+            $locations = SH::getEggs();
+            foreach($locations as $location){
+                [$eggX, $eggY, $eggZ, $worldName] = explode(":", $location);
+
+                $world = $blockPosition->getWorld();
+                if($world->getFolderName() !== $worldName){
+                    continue;
+                }
+    
+                $eggPosition = new Position((int)$eggX, (int)$eggY, (int)$eggZ, $world);
+                $aboveEggPosition = $eggPosition->add(0, 1, 0);
+                if($blockPosition->equals($aboveEggPosition)){
+                    $event->cancel();
+                    continue;
+                }
+            }
         }
     }
 }

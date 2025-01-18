@@ -51,3 +51,9 @@ Settings:
         min: 5
         # Set the maximum number of items to receive
         max: 8
+    Entity:
+      # Use "true" or "false" to activate/deactivate this option
+      particles: true
+      # Sets the particle color for the egg. Use this page to get the RGB code:
+      # https://htmlcolorcodes.com/es/
+      particle-color: [16, 230, 227]

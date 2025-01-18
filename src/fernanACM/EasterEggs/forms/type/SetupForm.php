@@ -88,7 +88,7 @@ final class SetupForm{
                         // NEW PROFILE
                         foreach($player->getServer()->getOnlinePlayers() as $target){
                             if(!$provider->exists($target)){
-                                $provider->create($target);
+                                $provider->createAccount($target);
                             }
                         }
                         Language::isSuccess($player, LangKey::SUCCESS_SETUP_RESET_DATA);

@@ -133,6 +133,7 @@ final class EventForm{
         $list = array_values($events);
         $form = new SimpleForm(function(Player $player, $data) use($list): void{
             if(is_null($data)){
+                $this->open($player);
                 return;
             }
             $eventName = strval($list[$data]);
@@ -164,8 +165,10 @@ final class EventForm{
 
         $form = new SimpleForm(function(Player $player, $data): void{
             if(is_null($data)){
+                $this->open($player);
                 return;
             }
+            $this->open($player);
         });
         $form->setTitle(TF::colorize("&l&9EASTEREGGS"));
         $content = "";
@@ -191,6 +194,7 @@ final class EventForm{
         $list = array_values($events);
         $form = new SimpleForm(function(Player $player, $data) use($list): void{
             if(is_null($data) || !isset($list[$data])){
+                $this->open($player);
                 return;
             }
             
@@ -209,7 +213,7 @@ final class EventForm{
                 // NEW PROFILE
                 foreach(Server::getInstance()->getOnlinePlayers() as $target){
                     if(!$provider->exists($target)){
-                        $provider->create($target);
+                        $provider->createAccount($target);
                     }
                 }
                 Language::isSuccess($player, LangKey::SUCCESS_EVENT_ESTABLISHED, ["{EVENT_NAME}" => $eventName]);

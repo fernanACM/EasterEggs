@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace fernanACM\EasterEggs\events;
 
+use pocketmine\player\Player;
+
 use pocketmine\event\player\PlayerEvent;
 
 use pocketmine\event\Cancellable;
@@ -31,6 +33,13 @@ class PlayerRewardEvent extends PlayerEvent implements Cancellable{
     protected array $rewardedItems = [];
     /** @var array $rewardedCommands */
     protected array $rewardedCommands = [];
+
+    /**
+     * @param Player $player
+     */
+    public function __construct(Player $player){
+        $this->player = $player;
+    }
 
     /**
      * @return Item[]

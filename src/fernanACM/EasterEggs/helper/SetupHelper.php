@@ -27,6 +27,8 @@ use fernanACM\EasterEggs\const\DataConst;
 use fernanACM\EasterEggs\const\NBTConst;
 use fernanACM\EasterEggs\EasterEggs as EE;
 
+use fernanACM\EasterEggs\utils\PluginUtils;
+
 use fernanACM\EasterEggs\language\LangKey;
 use fernanACM\EasterEggs\language\Language;
 
@@ -77,7 +79,8 @@ final class SetupHelper{
         self::$config->set(DataConst::EGGS, $positions);
         self::$config->save();
         Language::isSuccess($player, LangKey::SUCCESS_SAVED_POSITION, [
-            "{X}" => $x, "{Y}" => $y, "{Z}" => $z, "{WORLD}" => $world]);
+            "{X}" => $x, "{Y}" => $y, "{Z}" => $z, "{WORLD}" => $world], false);
+        PluginUtils::PlaySound($player, "random.pop", 1, 3.4);
         // PROGRESS
         $eggs = count(self::getEggs());
         $limit = EE::getInstance()->getEasterEggManager()->eggLimit();
@@ -111,7 +114,8 @@ final class SetupHelper{
             self::$config->set(DataConst::EGGS, array_values($positions));
             self::$config->save();
             Language::isSuccess($player, LangKey::SUCCESS_REMOVED_POSITION, [
-                "{X}" => $x, "{Y}" => $y, "{Z}" => $z, "{WORLD}" => $world]);
+                "{X}" => $x, "{Y}" => $y, "{Z}" => $z, "{WORLD}" => $world], false);
+            PluginUtils::PlaySound($player, "random.pop2", 1, 3.4);
         }
     }
 

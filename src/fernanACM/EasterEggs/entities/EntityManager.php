@@ -106,7 +106,7 @@ final class EntityManager{
                 $server->getLogger()->warning("The World {$worldName} has not been found");
                 continue;
             }
-            $pos = new Location(intval($x), intval($y)+1, intval($z), $world, 0.0, 0.0);
+            $pos = new Location(intval($x)+0.5, intval($y)+1, intval($z)+0.5, $world, 0.0, 0.0);
             $this->create($pos, $eggId++);
         }
     }

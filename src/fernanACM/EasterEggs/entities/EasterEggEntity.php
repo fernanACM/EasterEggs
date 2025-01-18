@@ -32,6 +32,8 @@ use fernanACM\EasterEggs\const\NBTConst;
 
 use fernanACM\EasterEggs\manager\EasterEggManager;
 
+use fernanACM\EasterEggs\EasterEggs as EE;
+
 use fernanACM\EasterEggs\helper\SetupHelper as SH;
 
 class EasterEggEntity extends Human{
@@ -124,7 +126,13 @@ class EasterEggEntity extends Human{
         $z = $radius * sin($angle);
         $y = $heightPerRevolution * $time;
         $particlePos = $position->add($x, $y, $z);
-        $world->addParticle($particlePos, new DustParticle(new Color(16, 230, 227)));
+        $config = EE::getInstance()->config;
+        if(boolval($config->getNested("Settings.EasterEgg.Entity.particles", true))){
+            $rgb = (array)$config->getNested("Settings.EasterEgg.Entity.particle-color"); // RGB = [R, G, B]
+            if(count($rgb) === 3){
+                $world->addParticle($particlePos, new DustParticle(new Color(intval($rgb[0]), intval($rgb[1]), intval($rgb[2]))));
+            }
+        }
     }    
 
     /**

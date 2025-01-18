@@ -59,7 +59,7 @@ Form:
     content: "&eSelect an option:"
     toggle1-button: "&l&9SETUP MODE{LINE}&r&2(ENABLED)"
     toggle2-button: "&l&9SETUP MODE{LINE}&r&c(DISABLED)"
-    remove-button: "&l&9REMOVER STAFF{LINE}&r&0Click"
+    remove-button: "&l&9REMOVER WAND{LINE}&r&0Click"
     locations-button: "&l&9VIEW LOCATIONS{LINE}&r&0Click"
     entity-button: "&l&9EGG SYSTEM{LINE}&r&0Click"
     reset-data-button: "&l&9RESET DATA{LINE}&r&0Click"
@@ -105,5 +105,6 @@ Reward:
   # Use these keys to get the following information:
   # "{PLAYER}" => Player name
   # "{EGGS}" => Egg goal
+  # "{EVENT_NAME}" => Event Name
   # "&" => "§" (Color)
-  broadcast-message: "&7Player &b{PLAYER}&r&7 has completed all {EGGS} &l&dEasterEggs&r&7!"
+  broadcast-message: "&7The player &b{PLAYER}&r&7 has successfully completed the {EGGS} &l&dEasterEggs&r&7 of the event &r&b{EVENT_NAME}&r&7!"
