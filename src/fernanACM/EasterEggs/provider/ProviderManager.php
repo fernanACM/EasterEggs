@@ -20,7 +20,7 @@ use pocketmine\utils\SingletonTrait;
 use fernanACM\EasterEggs\EasterEggs as EE;
 use fernanACM\EasterEggs\const\DataConst;
 
-use fernanACM\EasterEggs\helper\EventHelper;
+use fernanACM\EasterEggs\utils\helper\EventHelper;
 
 use fernanACM\EasterEggs\addons\ScoreHudAddon;
 

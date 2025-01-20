@@ -32,8 +32,7 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 
 use fernanACM\EasterEggs\utils\SkinUtils;
-
-use fernanACM\EasterEggs\helper\SetupHelper as SH;
+use fernanACM\EasterEggs\utils\helper\SetupHelper as SH;
 
 final class EntityManager{
     use SingletonTrait{

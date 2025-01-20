@@ -24,10 +24,10 @@ use Vecnavium\FormsUI\ModalForm;
 
 use fernanACM\EasterEggs\EasterEggs as EE;
 
-use fernanACM\EasterEggs\helper\EventHelper;
 use fernanACM\EasterEggs\language\LangKey;
 use fernanACM\EasterEggs\language\Language;
 
+use fernanACM\EasterEggs\utils\helper\EventHelper;
 use fernanACM\EasterEggs\utils\PluginUtils;
 
 final class EventForm{

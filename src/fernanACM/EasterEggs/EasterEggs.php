@@ -41,8 +41,8 @@ use fernanACM\EasterEggs\commands\EasterEggCommand;
 
 use fernanACM\EasterEggs\addons\ScoreHudAddon;
 
-use fernanACM\EasterEggs\helper\EventHelper;
-use fernanACM\EasterEggs\helper\SetupHelper;
+use fernanACM\EasterEggs\utils\helper\EventHelper;
+use fernanACM\EasterEggs\utils\helper\SetupHelper;
 
 use fernanACM\EasterEggs\utils\SkinUtils;
 

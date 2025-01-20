@@ -34,7 +34,7 @@ use fernanACM\EasterEggs\manager\EasterEggManager;
 
 use fernanACM\EasterEggs\EasterEggs as EE;
 
-use fernanACM\EasterEggs\helper\SetupHelper as SH;
+use fernanACM\EasterEggs\utils\helper\SetupHelper as SH;
 
 class EasterEggEntity extends Human{
 

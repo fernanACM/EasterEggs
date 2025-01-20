@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace fernanACM\EasterEggs\helper;
+namespace fernanACM\EasterEggs\utils\helper;
 
 use pocketmine\utils\Config;
 

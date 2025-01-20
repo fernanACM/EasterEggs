@@ -25,7 +25,7 @@ use fernanACM\EasterEggs\EasterEggs as EE;
 use fernanACM\EasterEggs\language\LangKey;
 use fernanACM\EasterEggs\language\Language;
 
-use fernanACM\EasterEggs\helper\SetupHelper as SH;
+use fernanACM\EasterEggs\utils\helper\SetupHelper as SH;
 use fernanACM\EasterEggs\utils\PluginUtils;
 
 final class SetupForm{

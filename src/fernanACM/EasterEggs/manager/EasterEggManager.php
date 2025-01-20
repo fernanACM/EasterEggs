@@ -25,9 +25,8 @@ use fernanACM\EasterEggs\EasterEggs as EE;
 use fernanACM\EasterEggs\language\LangKey;
 use fernanACM\EasterEggs\language\Language;
 
-use fernanACM\EasterEggs\helper\EventHelper;
-use fernanACM\EasterEggs\helper\SetupHelper;
-
+use fernanACM\EasterEggs\utils\helper\EventHelper;
+use fernanACM\EasterEggs\utils\helper\SetupHelper;
 use fernanACM\EasterEggs\utils\PluginUtils;
 
 use fernanACM\EasterEggs\events\PlayerClaimEvent;
