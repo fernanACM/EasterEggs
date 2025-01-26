@@ -29,7 +29,7 @@ use pocketmine\event\block\BlockPlaceEvent;
 
 use fernanACM\EasterEggs\EasterEggs as EE;
 use fernanACM\EasterEggs\entities\EasterEggEntity;
-use fernanACM\EasterEggs\helper\SetupHelper as SH;
+use fernanACM\EasterEggs\utils\helper\SetupHelper as SH;
 
 use fernanACM\EasterEggs\language\LangKey;
 use fernanACM\EasterEggs\language\Language;
