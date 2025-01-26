@@ -92,7 +92,7 @@ Settings:
 | ```eastereggs.use.remover.wand.acm``` | Use the wand to remove eggs |
 
 ### 🍟ScoreHud
-| Permission | Description |
+| Tag | Description |
 |---------|-------------|
 | ```{eastereggs.eggs}``` | Eggs obtained |
 | ```{eastereggs.goal}``` | Egg goal |
