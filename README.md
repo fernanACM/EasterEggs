@@ -91,6 +91,13 @@ Settings:
 | ```astereggs.enter.setupmode.acm``` | Enter in setup mode |
 | ```eastereggs.use.remover.wand.acm``` | Use the wand to remove eggs |
 
+### 🍟ScoreHud
+| Permission | Description |
+|---------|-------------|
+| ```{eastereggs.eggs}``` | Eggs obtained |
+| ```{eastereggs.goal}``` | Egg goal |
+| ```{eastereggs.event-name}``` | Current event |
+
 ### 🌐 MultiLanguage
 | Language | Translated by |
 |----------|---------------|
