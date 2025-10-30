@@ -171,7 +171,7 @@ final class EasterEggManager{
             $message = Language::getPlayerMessage($player, LangKey::REWARD_BROADCAST, [
                 "{PLAYER}" => $player->getName(),
                 "{EGGS}" => $this->eggs($player),
-                "[EVENT_NAME]" => $this->eventName()
+                "{EVENT_NAME}" => $this->eventName()
             ]);
             $server->broadcastMessage(EE::getPrefix().$message);
         }
